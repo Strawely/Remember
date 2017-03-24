@@ -20,8 +20,9 @@ namespace Remember
     /// </summary>
     public partial class GameWindow : Window
     {
-        private Image[,] _img;
-        private Button btn;
+        private Button[,] _img;
+        private Button[] _tmpImages = new Button[2];
+
         public GameWindow(int width, int height)
         {
             InitializeComponent(width, height);
@@ -31,16 +32,21 @@ namespace Remember
         {
             InitializeComponent();
             UniformGrid.Columns = width;
-            _img = new Image[width, height];
+            _img = new Button[width, height];
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    _img[i, j] = new Image()
+                    _img[i, j] = new Button()
                     {
-                        Width = 100,
-                        Height = 100,
-                        Source = new BitmapImage(new Uri("C:\\Users\\solom\\YandexDisk\\Фотокамера\\Бал\\большойвесенний\\YZZhk5ZAzGE.jpg"))
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        
+                        Content = new Image()
+                        {
+                            Source = new BitmapImage(new Uri("C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet1\\omNq46VJ8GQ.jpg"))
+                        },
+                        
                     };
                     
                     UniformGrid.Children.Add(_img[i, j]);
@@ -48,10 +54,8 @@ namespace Remember
 
                 }
             }
-            btn = new Button()
-            {
-                Height = 100, Width = 500, Content = "Btn"
-            };
+
+            
             
         }
 
