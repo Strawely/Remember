@@ -1,17 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Remember
 {
@@ -44,12 +32,16 @@ namespace Remember
             {
                 _fieldWidth = Int32.Parse(TxtBoxWidth.Text);
                 _fieldHeight = Int32.Parse(TxtBoxHeight.Text);
+                Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight);
+                gameWindow.Show();
+                gameWindow.Activate();
+                this.Close();
             }
             catch (ArgumentNullException)
             {
                 MessageBox.Show("Do not leave text fields blank");
             }
-            catch (FormatException formatException)
+            catch (FormatException)
             {
                 MessageBox.Show("Wrong format of size values");
             }
