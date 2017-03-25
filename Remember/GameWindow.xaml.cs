@@ -23,18 +23,23 @@ namespace Remember
     {
         private CardButton[,] _img;
         private CardButton[] _tmpImages = new CardButton[2];
-
-        private String[] _imageFiles;
+        
+        private FNameString[] _imageFileStrings;
        
         public GameWindow(int width, int height)
         {
-            InitializeComponent(width, height);
             GetImages("C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet1");
+            InitializeComponent(width, height);
         }
 
         private void GetImages(String path)
         {
-            _imageFiles = Directory.GetFiles(path);
+             String[] imageFiles = Directory.GetFiles(path);
+            _imageFileStrings = new FNameString[imageFiles.Length];
+            for (int i = 0; i < imageFiles.Length; i++)
+            {
+                _imageFileStrings[i] = new FNameString(imageFiles[i]);
+            }
         }
 
         private void imgBtn_Click(object sender, RoutedEventArgs e)
@@ -67,8 +72,8 @@ namespace Remember
 
                 for (int j = 0; j < 2; j++)
                 {
-                    _tmpImages[j].IsEnabled = false;
-                    _tmpImages[j].Content = null;
+                    _tmpImages[j].Click -= imgBtn_Click;
+                    _tmpImages[j] = null;
                 }
             }
 
@@ -79,10 +84,13 @@ namespace Remember
             InitializeComponent();
             UniformGrid.Columns = width;
             _img = new CardButton[width,height];
+            int randomLimit = _imageFileStrings.Length;
+            Random random = new Random();
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
+
                     _img[i, j] = new CardButton()
                     {
                         HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -95,7 +103,7 @@ namespace Remember
                         },
                         
                     };
-                    _img[i,j].Click += new RoutedEventHandler(this.imgBtn_Click);
+                    _img[i,j].Click += imgBtn_Click;
                     UniformGrid.Children.Add(_img[i, j]);
                     
 

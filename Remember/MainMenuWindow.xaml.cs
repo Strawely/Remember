@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -34,6 +35,10 @@ namespace Remember
             {
                 _fieldWidth = Int32.Parse(TxtBoxWidth.Text);
                 _fieldHeight = Int32.Parse(TxtBoxHeight.Text);
+                if (_fieldWidth * _fieldHeight % 2 != 0)
+                {
+                    throw new OddFieldSizeException();
+                }
                 Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight);
                 gameWindow.Show();
                 gameWindow.Activate();
@@ -46,6 +51,10 @@ namespace Remember
             catch (FormatException)
             {
                 MessageBox.Show("Wrong format of size values");
+            }
+            catch (OddFieldSizeException)
+            {
+                MessageBox.Show("Number of cells must be exactly dividable by 2");
             }
             catch (Exception exception)
             {

@@ -15,8 +15,8 @@
             Width="75" 
             Margin="0,39,0,240" 
             Click="OnBtnStartClick"/>
-        <TextBox x:Name="TxtBoxWidth" Text="5" HorizontalAlignment="Center" TextWrapping="Wrap" Width="120" Margin="0,91,0,0" Height="23" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtBoxHeight" Text ="5" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,119,0,0"/>
+        <TextBox x:Name="TxtBoxWidth" Text="6" HorizontalAlignment="Center" TextWrapping="Wrap" Width="120" Margin="0,91,0,0" Height="23" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtBoxHeight" Text ="6" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,119,0,0"/>
         <Label x:Name="LblWidth" Content="Width:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="148,91,0,0"/>
         <Label x:Name="LblHeight" Content="Height:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="145,119,0,0"/>
 
