@@ -12,7 +12,7 @@ namespace Remember
     /// <summary>
     /// Логика взаимодействия для GameWindow.xaml
     /// </summary>
-    public partial class GameWindow : Window
+    public partial class GameWindow
     {
         private CardButton[,] _img;
         private CardButton[] _tmpImages = new CardButton[2];
@@ -20,12 +20,21 @@ namespace Remember
         private List<String> _pictureList = new List<string>();
         private String[] _imgFilesStrings;
 
-        public GameWindow(int width, int height)
+        public GameWindow(int width, int height, String pictureSetPath)
         {
             InitializeComponent(width, height);
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.ShowDialog();
-            GetImages(dialog.SelectedPath, width, height);
+            String path;
+            if (pictureSetPath != null)
+            {
+                path = pictureSetPath;
+            }
+            else
+            {
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                dialog.ShowDialog();
+                path = dialog.SelectedPath;
+            }
+            GetImages(path, width, height);
             InitButtonPictures();
         }
 
@@ -75,7 +84,7 @@ namespace Remember
                 for (int j = 0; j < 2; j++)
                 {
                     _tmpImages[j].Click -= imgBtn_Click;
-                    _tmpImages[j].IsEnabled = false;
+//                    _tmpImages[j].IsEnabled = false;
                     _tmpImages[j] = null;
                 }
             }
@@ -84,12 +93,11 @@ namespace Remember
 
         private void InitButtonPictures()
         {
-            String rnd;
             for (int i = 0; i < _img.GetLength(0); i++)
             {
                 for (int j = 0; j < _img.GetLength(1); j++)
                 {
-                    rnd = GenRndImage();
+                    var rnd = GenRndImage();
                     _img[i,j].InternalContent = new Image()
                     {
                         Source = new BitmapImage(new Uri(rnd))
@@ -121,7 +129,9 @@ namespace Remember
                     {
                         HorizontalAlignment = HorizontalAlignment.Stretch,
                         VerticalAlignment = VerticalAlignment.Stretch,
+                        BorderThickness = new Thickness(5,5,5,5)
                     };
+                    _img[i, j].Background = CardButton.DefaultBackground;
                     _img[i,j].Click += imgBtn_Click;
                     UniformGrid.Children.Add(_img[i, j]);
                     

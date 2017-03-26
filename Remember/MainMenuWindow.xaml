@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Remember"
         mc:Ignorable="d"
         Title="Remember" Height="350" Width="525">
-    <Grid>
+    <Grid IsHitTestVisible="True">
         <Button 
             x:Name="BtnStart" 
             Content="Start Game" 
@@ -14,11 +14,19 @@
             VerticalAlignment="Center" 
             Width="75" 
             Margin="0,39,0,240" 
-            Click="OnBtnStartClick"/>
+            Click="OnBtnStartClick" IsDefault="True">
+            <Button.Background>
+                <SolidColorBrush Color="#FFDDDDDD"/>
+            </Button.Background>
+        </Button>
+
         <TextBox x:Name="TxtBoxWidth" Text="2" HorizontalAlignment="Center" TextWrapping="Wrap" Width="120" Margin="0,91,0,0" Height="23" VerticalAlignment="Top"/>
         <TextBox x:Name="TxtBoxHeight" Text ="3" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,119,0,0"/>
         <Label x:Name="LblWidth" Content="Width:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="148,91,0,0"/>
         <Label x:Name="LblHeight" Content="Height:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="145,119,0,0"/>
+        <RadioButton x:Name="RadioBtnSet1" Content="Picture Set 1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,150,0,0"/>
+        <RadioButton x:Name="RadioBtnSet2" Content="Picture Set 2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,170,0,0"/>
+        <RadioButton x:Name="RadioBtnCustomSet" Content="Custom Set" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="216,190,221,0"/>
 
     </Grid>
 </Window>

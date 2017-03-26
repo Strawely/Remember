@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Remember
@@ -7,23 +8,27 @@ namespace Remember
     public class CardButton:Button
     {
         private bool _shown = false;
-        private object _internalContent;
+        private Image _internalContent;
         private String _contentToString;
-
+        private static Brush _defaultBackground = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\solom\\Documents\\Visual Studio 2017\\Projects\\Remember\\src\\backgr.png")));
 
         public bool Shown
         {
             get { return _shown; }
             set
             {
+                BrushConverter brushConverter = new BrushConverter();
+                ImageBrush brush = new ImageBrush();
                 _shown = value;
                 if (_shown)
                 {
-                    Content = _internalContent;
+                    brush.ImageSource = _internalContent.Source;
+                    Background = brush;
                 }
                 else
                 {
-                    Content = null;
+                    
+                    Background = _defaultBackground;
                 }
             }
         }
@@ -35,24 +40,19 @@ namespace Remember
             return this._contentToString.Equals(cardButton._contentToString);
         }
 
-        public object InternalContent
+        public Image InternalContent
         {
-            get
-            {
-                if (_internalContent.GetType() == typeof(Image))
-                {
-                    return _internalContent.ToString();
-                }
-                else
-                {
-                    throw new Exception();
-                }
-            }
+            get { return _internalContent; }
             set
             {
                 _internalContent = value;
-                _contentToString = ((BitmapImage) ((Image) _internalContent).Source).UriSource.ToString();
+                _contentToString = ((BitmapImage) _internalContent.Source).UriSource.ToString();
             }
+        }
+
+        public static Brush DefaultBackground
+        {
+            get { return _defaultBackground; }
         }
     }
 }

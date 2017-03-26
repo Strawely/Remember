@@ -14,16 +14,26 @@ namespace Remember
         public MainWindow()
         {
             InitializeComponent();
+            RadioBtnSet1.IsChecked = true;
         }
 
-        public int FieldWidth
+        private String ChoosePictureSet()
         {
-            get { return _fieldWidth; }
-        }
-
-        public int FieldHeight
-        {
-            get { return _fieldHeight; }
+            if (RadioBtnSet1.IsChecked == true)
+            {
+                return "C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet1";
+            }
+            else
+            {
+                if (RadioBtnSet2.IsChecked == true)
+                {
+                    return "C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet2";
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         private void OnBtnStartClick(object sender, RoutedEventArgs e)
@@ -36,7 +46,7 @@ namespace Remember
                 {
                     throw new OddFieldSizeException();
                 }
-                Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight);
+                Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight, ChoosePictureSet());
                 gameWindow.Show();
                 gameWindow.Activate();
                 this.Close();
