@@ -16,5 +16,10 @@ namespace Remember
         {
             Path = path;
         }
+
+        public new String ToString()
+        {
+            return Path;
+        }
     }
 }

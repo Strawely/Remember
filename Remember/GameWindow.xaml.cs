@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Remember
 {
@@ -23,22 +14,29 @@ namespace Remember
     {
         private CardButton[,] _img;
         private CardButton[] _tmpImages = new CardButton[2];
-        
-        private FNameString[] _imageFileStrings;
-       
+
+        private List<String> _pictureList = new List<string>();
+        private String[] _imgFilesStrings;
+
         public GameWindow(int width, int height)
         {
-            GetImages("C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet1");
             InitializeComponent(width, height);
+            GetImages("C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet1", width, height);
+            InitButtonPictures();
         }
 
-        private void GetImages(String path)
+        private void GetImages(String path, int width, int height)
         {
-             String[] imageFiles = Directory.GetFiles(path);
-            _imageFileStrings = new FNameString[imageFiles.Length];
-            for (int i = 0; i < imageFiles.Length; i++)
+            _imgFilesStrings = Directory.GetFiles(path, "*.jpg");
+            if (width * height / 2 > _imgFilesStrings.Length)
             {
-                _imageFileStrings[i] = new FNameString(imageFiles[i]);
+                throw new Exception();      //заменить на нормальное исключение
+            }
+            int k = height * width / 2;
+            for (int i = 0; i < k; i++)
+            {
+                _pictureList.Add(_imgFilesStrings[i]);
+                _pictureList.Add(_imgFilesStrings[i]);
             }
         }
 
@@ -79,29 +77,45 @@ namespace Remember
 
         }
 
+        private void InitButtonPictures()
+        {
+            String rnd;
+            for (int i = 0; i < _img.GetLength(0); i++)
+            {
+                for (int j = 0; j < _img.GetLength(1); j++)
+                {
+                    rnd = GenRndImage();
+                    _img[i,j].InternalContent = new Image()
+                    {
+                        Source = new BitmapImage(new Uri(rnd))
+                    };
+                }
+            }
+        }
+
+        public String GenRndImage()
+        {
+            Random random = new Random();
+            int i = random.Next(_pictureList.Count);
+            String s = _pictureList[i];
+            _pictureList.RemoveAt(i);
+            return s;
+
+        }
+
         private void InitializeComponent(int width, int height)
         {
             InitializeComponent();
             UniformGrid.Columns = width;
             _img = new CardButton[width,height];
-            int randomLimit = _imageFileStrings.Length;
-            Random random = new Random();
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-
                     _img[i, j] = new CardButton()
                     {
                         HorizontalAlignment = HorizontalAlignment.Stretch,
                         VerticalAlignment = VerticalAlignment.Stretch,
-                        
-                        
-                        InternalContent = new Image()
-                        {
-                            Source = new BitmapImage(new Uri("C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet1\\omNq46VJ8GQ.jpg"))
-                        },
-                        
                     };
                     _img[i,j].Click += imgBtn_Click;
                     UniformGrid.Children.Add(_img[i, j]);
@@ -109,11 +123,6 @@ namespace Remember
 
                 }
             }
-
-            
-            
         }
-
-
     }
 }
