@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using HorizontalAlignment = System.Windows.HorizontalAlignment;
 
 namespace Remember
 {
@@ -21,7 +23,9 @@ namespace Remember
         public GameWindow(int width, int height)
         {
             InitializeComponent(width, height);
-            GetImages("C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet1", width, height);
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.ShowDialog();
+            GetImages(dialog.SelectedPath, width, height);
             InitButtonPictures();
         }
 
@@ -65,12 +69,13 @@ namespace Remember
                     btn.Shown = true;
                     break;
             }
-            if (_tmpImages[0] != null && _tmpImages[1] != null && _tmpImages[0].Content.ToString().Equals(_tmpImages[1].Content.ToString()))
+            if (_tmpImages[0] != null && _tmpImages[1] != null && _tmpImages[0].CompareContent(_tmpImages[1]))
             {
 
                 for (int j = 0; j < 2; j++)
                 {
                     _tmpImages[j].Click -= imgBtn_Click;
+                    _tmpImages[j].IsEnabled = false;
                     _tmpImages[j] = null;
                 }
             }

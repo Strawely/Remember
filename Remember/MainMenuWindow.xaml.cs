@@ -39,6 +39,7 @@ namespace Remember
                 Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight);
                 gameWindow.Show();
                 gameWindow.Activate();
+                this.Close();
                 
             }
             catch (ArgumentNullException)

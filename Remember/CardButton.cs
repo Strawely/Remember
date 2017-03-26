@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace Remember
 {
@@ -6,6 +8,7 @@ namespace Remember
     {
         private bool _shown = false;
         private object _internalContent;
+        private String _contentToString;
 
 
         public bool Shown
@@ -25,19 +28,31 @@ namespace Remember
             }
         }
 
-        public void ReversShownLabel()
-        {
-            Shown = !Shown;
-        }
 
-//        public new object Content
-//        {
-//            get;  set; }
+
+        public bool CompareContent(CardButton cardButton)
+        {
+            return this._contentToString.Equals(cardButton._contentToString);
+        }
 
         public object InternalContent
         {
-            get { return _internalContent; }
-            set { _internalContent = value; }
+            get
+            {
+                if (_internalContent.GetType() == typeof(Image))
+                {
+                    return _internalContent.ToString();
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            set
+            {
+                _internalContent = value;
+                _contentToString = ((BitmapImage) ((Image) _internalContent).Source).UriSource.ToString();
+            }
         }
     }
 }
