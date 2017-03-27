@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Remember
 {
@@ -19,6 +20,12 @@ namespace Remember
 
         private List<String> _pictureList = new List<string>();
         private String[] _imgFilesStrings;
+
+        private int _timerCount;
+        private int _clickCounter;
+        private int _notOpenedCount;
+
+        private Timer _timer;
 
         public GameWindow(int width, int height, String pictureSetPath)
         {
@@ -57,6 +64,11 @@ namespace Remember
         {
             CardButton btn = (CardButton) sender;
             int i = 0;
+            if (_clickCounter == 0)
+            {
+                _timer.Start();
+            }
+            _clickCounter++;
             while (i < _tmpImages.Length && _tmpImages[i] != null)
             {
                 i++;
@@ -87,8 +99,21 @@ namespace Remember
 //                    _tmpImages[j].IsEnabled = false;
                     _tmpImages[j] = null;
                 }
+                _notOpenedCount--;
+                if (_notOpenedCount == 0)
+                {
+                    OnWinningDialog();
+                    _timer.Stop();
+                }
             }
 
+        }
+
+        private void OnWinningDialog()
+        {
+            
+            MessageBox.Show("Time: " + _timerCount + "\n" + "Clicks: " + _clickCounter, "Points");
+            this.Close();
         }
 
         private void InitButtonPictures()
@@ -116,9 +141,18 @@ namespace Remember
 
         }
 
+        public void _timer_Tick(object sender, EventArgs eventArgs)
+        {
+            _timerCount++;
+        }
+
         private void InitializeComponent(int width, int height)
         {
             InitializeComponent();
+            _notOpenedCount = width*height/2;
+            _timer = new Timer();
+            _timer.Interval = 1000;
+            _timer.Tick += _timer_Tick;
             UniformGrid.Columns = width;
             _img = new CardButton[width,height];
             for (int i = 0; i < width; i++)
@@ -144,5 +178,6 @@ namespace Remember
                 }
             }
         }
+        
     }
 }
