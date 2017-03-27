@@ -6,5 +6,8 @@
         xmlns:local="clr-namespace:Remember"
         mc:Ignorable="d"
         Title="GameWindow" Height="533">
-    <UniformGrid Name="UniformGrid"></UniformGrid>
+    <UniformGrid Name="UniformGrid">
+        
+    </UniformGrid>
+    
 </Window>
