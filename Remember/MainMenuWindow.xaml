@@ -14,7 +14,7 @@
             VerticalAlignment="Center" 
             Width="75" 
             Margin="0,39,0,240" 
-            Click="OnBtnStartClick" IsDefault="True">
+            Click="OnBtnStartClick" IsDefault="True" MouseMove="BtnStart_MouseMove" IsHitTestVisible="True">
             <Button.Background>
                 <SolidColorBrush Color="#FFDDDDDD"/>
             </Button.Background>
