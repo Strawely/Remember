@@ -17,7 +17,7 @@ namespace Remember
     /// </summary>
     public partial class GameWindow
     {
-        private const int TimerInterval = 1000;
+        private const int TimerInterval = 1;
         private CardButton[,] _img;                                                     //инициализируется десериализацией
         private CardButton[] _tmpImages = new CardButton[2];
 
@@ -123,9 +123,17 @@ namespace Remember
             }
         }
 
+        private void ShowHighScore()
+        {
+            Window highScoreWindow = new HighScore(_timeCount, _clicksCount);
+            highScoreWindow.Show();
+            highScoreWindow.Activate();
+        }
+
         private void OnWinning()
         {
-            MessageBox.Show("Clicks: " + _clicksCount + "\nTime: " + _timeCount, Properties.Resources.GameWindow_OnWinning_Score);
+            MessageBox.Show("Clicks: " + _clicksCount + "\nTime: " + _timeCount + " ms", Properties.Resources.GameWindow_OnWinning_Score);
+            ShowHighScore();
         }
         
         private String GenRndImage()
@@ -171,12 +179,7 @@ namespace Remember
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
-//            GameCondition condition = new GameCondition();
-//            FileStream fileStream = File.Create("data.dat");
-//            BinaryFormatter bf = new BinaryFormatter();
-//            bf.Serialize(fileStream, condition);
-//            fileStream.Close();
+
         }
     }
 }
