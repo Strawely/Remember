@@ -88,6 +88,7 @@
     <Compile Include="HighScore.xaml.cs">
       <DependentUpon>HighScore.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NotEnoughPicturesException.cs" />
     <Compile Include="Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>

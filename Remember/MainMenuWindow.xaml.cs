@@ -51,7 +51,7 @@ namespace Remember
             {
                 _fieldWidth = Int32.Parse(TxtBoxWidth.Text);
                 _fieldHeight = Int32.Parse(TxtBoxHeight.Text);
-                if (_fieldWidth * _fieldHeight % 2 != 0)
+                if (_fieldWidth*_fieldHeight%2 != 0)
                 {
                     throw new OddFieldSizeException();
                 }
@@ -71,6 +71,10 @@ namespace Remember
             catch (OddFieldSizeException)
             {
                 MessageBox.Show("Number of cells must be exactly dividable by 2");
+            }
+            catch (NotEnoughPicturesException)
+            {
+                MessageBox.Show("Pictures in Set are not enough for this size of field");
             }
             catch (Exception exception)
             {

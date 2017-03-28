@@ -86,13 +86,8 @@ namespace Remember
             }
             if (width * height > _pictureList.Count)
             {
-                throw new Exception();      //заменить на нормальное исключение
+                throw new NotEnoughPicturesException();      
             }
-//            for (int i = 0; i < k; i++)
-//            {
-//                _pictureList.Add(_imgFilesStrings[i]);
-//                _pictureList.Add(_imgFilesStrings[i]);
-//            }
         }
 
         private void imgBtn_Click(object sender, RoutedEventArgs e)
