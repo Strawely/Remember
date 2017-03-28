@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Remember
 {
@@ -14,8 +15,15 @@ namespace Remember
     /// </summary>
     public partial class GameWindow
     {
+        private const int TimerInterval = 1000;
         private CardButton[,] _img;
         private CardButton[] _tmpImages = new CardButton[2];
+
+        private int _leftCardsCount;
+        private int _timeCount;
+        private int _clicksCount;
+
+        private Timer _timer = new Timer();
 
         private List<String> _pictureList = new List<string>();
         private String[] _imgFilesStrings;
@@ -23,6 +31,9 @@ namespace Remember
         public GameWindow(int width, int height, String pictureSetPath)
         {
             InitializeComponent(width, height);
+            _leftCardsCount = width * height / 2;
+            _timer.Interval = TimerInterval;
+            _timer.Tick += _timer_Tick;
             String path;
             if (pictureSetPath != null)
             {
@@ -36,6 +47,11 @@ namespace Remember
             }
             GetImages(path, width, height);
             InitButtonPictures();
+        }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            _timeCount++;
         }
 
         private void GetImages(String path, int width, int height)
@@ -53,8 +69,15 @@ namespace Remember
             }
         }
 
+
+
         private void imgBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (_clicksCount == 0)
+            {
+                _timer.Start();
+            }
+            _clicksCount++;
             CardButton btn = (CardButton) sender;
             int i = 0;
             while (i < _tmpImages.Length && _tmpImages[i] != null)
@@ -80,14 +103,23 @@ namespace Remember
             }
             if (_tmpImages[0] != null && _tmpImages[1] != null && _tmpImages[0].CompareContent(_tmpImages[1]))
             {
-
+                _leftCardsCount--;
                 for (int j = 0; j < 2; j++)
                 {
                     _tmpImages[j].Click -= imgBtn_Click;
-//                    _tmpImages[j].IsEnabled = false;
                     _tmpImages[j] = null;
                 }
             }
+            if (_leftCardsCount == 0)
+            {
+                _timer.Stop();
+                OnWinning();
+            }
+        }
+
+        private void OnWinning()
+        {
+            MessageBox.Show("Clicks: " + _clicksCount + "\nTime: " + _timeCount, PictureSet1.GameWindow_OnWinning_Score);
 
         }
 
@@ -129,6 +161,7 @@ namespace Remember
                     {
                         HorizontalContentAlignment = HorizontalAlignment.Stretch,
                         VerticalContentAlignment = VerticalAlignment.Stretch,
+                        BorderThickness = new Thickness(5,5,5,5),
                         Content = new TextBlock()
                         {
                             Background = CardButton.DefaultBackground
