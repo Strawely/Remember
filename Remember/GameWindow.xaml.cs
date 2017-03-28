@@ -45,7 +45,6 @@ namespace Remember
             }
             InitializeComponent(width, height, path);
             InitizlizeTimer();
-            this.Closing -= Window_Closing;
         }
 
         private void InitizlizeTimer()
@@ -172,21 +171,12 @@ namespace Remember
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            int w = _img.GetLength(0);
-            int h = _img.GetLength(1);
-            bool[,] isShown = new bool[w, h];
-            for (int i = 0; i < w; i++)
-            {
-                for (int j = 0; j < h; j++)
-                {
-                    isShown[i, j] = _img[i, j].Shown;
-                }
-            }
-            GameCondition condition = new GameCondition();
-            FileStream fileStream = File.Create("data.dat");
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(fileStream, condition);
-            fileStream.Close();
+            
+//            GameCondition condition = new GameCondition();
+//            FileStream fileStream = File.Create("data.dat");
+//            BinaryFormatter bf = new BinaryFormatter();
+//            bf.Serialize(fileStream, condition);
+//            fileStream.Close();
         }
     }
 }

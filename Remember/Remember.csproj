@@ -85,10 +85,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GameCondition.cs" />
+    <Compile Include="High Score.xaml.cs">
+      <DependentUpon>High Score.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
     <Page Include="GameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="High Score.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
