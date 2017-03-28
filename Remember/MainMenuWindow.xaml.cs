@@ -1,7 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 
 namespace Remember
@@ -43,37 +40,6 @@ namespace Remember
 
         private void OnBtnStartClick(object sender, RoutedEventArgs e)
         {
-            StartGame();
-        }
-
-        private void BtnContinueGame_Click(object sender, RoutedEventArgs eventArgs)
-        {
-            String file = "data.dat";
-            if (File.Exists(file))
-            {
-                FileStream fileStream = File.OpenRead(file);
-                BinaryFormatter bf = new BinaryFormatter();
-                try
-                {
-                    GameCondition condition = (GameCondition)bf.Deserialize(fileStream);
-                    fileStream.Close();
-                    StartGame(condition);
-                }
-                catch (SerializationException e)
-                {
-                    Console.WriteLine(e);
-                    System.Windows.Forms.MessageBox.Show("Ex");
-                }
-            }
-        }
-
-        private void StartGame()
-        {
-            StartGame(null);
-        }
-
-        private void StartGame(GameCondition condition)
-        {
             try
             {
                 _fieldWidth = Int32.Parse(TxtBoxWidth.Text);
@@ -82,16 +48,14 @@ namespace Remember
                 {
                     throw new OddFieldSizeException();
                 }
-                Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight, ChoosePictureSet(), condition);
+                Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight, ChoosePictureSet());
                 gameWindow.Show();
                 gameWindow.Activate();
-                this.Close();
-
+                Close();
             }
-            catch (ArgumentNullException e)
+            catch (ArgumentNullException)
             {
                 MessageBox.Show("Do not leave text fields blank");
-                Console.WriteLine(e.StackTrace);
             }
             catch (FormatException)
             {

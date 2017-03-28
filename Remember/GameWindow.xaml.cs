@@ -25,15 +25,12 @@ namespace Remember
         private int _timeCount;
         private int _clicksCount;
 
-        private bool[,] _isShown = null;
-
         private Timer _timer = new Timer();                                            //стартовать таймер, если ещё не запущен
 
         private List<String> _pictureList = new List<string>();                         // что-нибудь сделать с дублированием списка массивом
         private String[] _imgFilesStrings;
-        private String[,] _imgFiles = null;
 
-        public GameWindow(int width, int height, String pictureSetPath, GameCondition condition)
+        public GameWindow(int width, int height, String pictureSetPath)
         {
             
             _leftCardsCount = width * height / 2;
@@ -46,12 +43,9 @@ namespace Remember
             {
                 path = GetCustomImagesPath();                                          //добавить информационное сообщение для пользователя                                           
             }
-            if (condition != null)
-            {
-                Deserialization(condition);
-            }
             InitializeComponent(width, height, path);
             InitizlizeTimer();
+            this.Closing -= Window_Closing;
         }
 
         private void InitizlizeTimer()
@@ -66,15 +60,6 @@ namespace Remember
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.ShowDialog();
             return dialog.SelectedPath;
-        }
-
-        private void Deserialization(GameCondition condition)
-        {
-            _imgFiles = condition.ImgFiles;
-            _isShown = condition.IsShown;
-            _timeCount = condition.CurrentTime;
-            _clicksCount = condition.CurrentClicks;
-            _leftCardsCount = condition.LeftCards;
         }
         
         private void _timer_Tick(object sender, EventArgs e)
@@ -142,7 +127,6 @@ namespace Remember
         private void OnWinning()
         {
             MessageBox.Show("Clicks: " + _clicksCount + "\nTime: " + _timeCount, Properties.Resources.GameWindow_OnWinning_Score);
-            this.Closing -= Window_Closing;
         }
         
         private String GenRndImage()
@@ -155,36 +139,12 @@ namespace Remember
 
         }
 
-        private String[,] GenRndPathArray(int width, int height)
-        {
-            String[,] s = new String[width, height];
-            for (int i = 0; i < width; i++)
-            {
-                for (int j = 0; j < height; j++)
-                {
-                    s[i, j] = GenRndImage();
-                }
-            }
-            return s;
-        }
-
         private void InitializeComponent(int width, int height, String path)
         {
             InitializeComponent();
             GetImages(path, width, height);
             UniformGrid.Columns = width;
             _img = new CardButton[width, height];
-            String[,] fileStrings;
-            if (_imgFiles == null && _isShown == null)
-            {
-                fileStrings = GenRndPathArray(width, height);
-                _imgFiles = fileStrings;
-                _isShown = new bool[width, height];
-            }
-            else
-            {
-                fileStrings = _imgFiles;
-            }
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
@@ -199,15 +159,13 @@ namespace Remember
                             Background = CardButton.DefaultBackground
                         }
                     };
+                    var rnd = GenRndImage();
                     _img[i, j].InternalContent = new Image()
                     {
-                        Source = new BitmapImage(new Uri(fileStrings[i,j]))
+                        Source = new BitmapImage(new Uri(rnd))
                     };
-                    _img[i, j].Shown = _isShown[i, j];
                     _img[i, j].Click += imgBtn_Click;
                     UniformGrid.Children.Add(_img[i, j]);
-
-
                 }
             }
         }
@@ -224,7 +182,7 @@ namespace Remember
                     isShown[i, j] = _img[i, j].Shown;
                 }
             }
-            GameCondition condition = new GameCondition(_timeCount, _clicksCount, _leftCardsCount, _imgFiles, isShown);
+            GameCondition condition = new GameCondition();
             FileStream fileStream = File.Create("data.dat");
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(fileStream, condition);
