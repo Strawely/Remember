@@ -59,5 +59,14 @@ namespace Remember.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Score.
+        /// </summary>
+        internal static string GameWindow_OnWinning_Score {
+            get {
+                return ResourceManager.GetString("GameWindow_OnWinning_Score", resourceCulture);
+            }
+        }
     }
 }

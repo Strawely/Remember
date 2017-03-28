@@ -23,7 +23,7 @@
         <RadioButton x:Name="RadioBtnSet1" Content="Picture Set 1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,150,0,0"/>
         <RadioButton x:Name="RadioBtnSet2" Content="Picture Set 2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,170,0,0"/>
         <RadioButton x:Name="RadioBtnCustomSet" Content="Custom Set" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,190,0,0" Width="85"/>
-        <Button x:Name="BtnContinueGame" Content="Continue game" HorizontalAlignment="Center" VerticalAlignment="Top" Width="118" Margin="200,44,199,0"/>
+        <Button x:Name="BtnContinueGame" Content="Continue game" HorizontalAlignment="Center" VerticalAlignment="Top" Width="118" Margin="200,44,199,0" Click="BtnContinueGame_Click"/>
 
     </Grid>
 </Window>

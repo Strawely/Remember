@@ -73,5 +73,10 @@ namespace Remember
                 MessageBox.Show("ERRORchik");
             }
         }
+
+        private void BtnContinueGame_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

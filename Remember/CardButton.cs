@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Remember
 {
-    public class CardButton:Button
+    [Serializable]
+    public class CardButton:Button, ISerializable
     {
         private bool _shown = false;
         private Image _internalContent;
@@ -59,6 +61,21 @@ namespace Remember
         public static Brush DefaultBackground
         {
             get { return _defaultBackground; }
+        }
+
+        public CardButton()
+        {
+            
+        }
+
+        public CardButton(SerializationInfo info, StreamingContext context)
+        {
+            this.Shown = info.GetBoolean("Shown");
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Shown", _shown);
         }
     }
 }
