@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -11,7 +10,6 @@ namespace Remember
         private bool _shown = false;
         private Image _internalContent;
         private String _contentToString;
-        
         private static Brush _defaultBackground = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\solom\\Source\\Repos\\Remember\\src\\backgr.png")));
 
         public bool Shown
@@ -25,8 +23,7 @@ namespace Remember
                 if (_shown)
                 {
                     brush.ImageSource = _internalContent.Source;
-                    
-                    Content = new TextBlock()
+                    Content = new TextBox()
                     {
                         Background = brush
                     };
@@ -34,8 +31,7 @@ namespace Remember
                 else
                 {
                     
-//                    Background = _defaultBackground;
-                    Content = new TextBlock()
+                    Content = new TextBox()
                     {
                         Background = _defaultBackground
                     };

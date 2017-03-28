@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
-using Image = System.Windows.Controls.Image;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Remember
 {
@@ -22,46 +17,46 @@ namespace Remember
         private CardButton[,] _img;
         private CardButton[] _tmpImages = new CardButton[2];
 
-        private List<BitmapImage> _pictureList = new List<BitmapImage>();
+        private List<String> _pictureList = new List<string>();
         private String[] _imgFilesStrings;
 
-        private int _timerCount;
-        private int _clickCounter;
-        private int _notOpenedCount;
-
-        private Timer _timer;
-
-        public GameWindow(int width, int height, List<BitmapImage> picBitmaps)
+        public GameWindow(int width, int height, String pictureSetPath)
         {
             InitializeComponent(width, height);
-            _pictureList = picBitmaps;
+            String path;
+            if (pictureSetPath != null)
+            {
+                path = pictureSetPath;
+            }
+            else
+            {
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                dialog.ShowDialog();
+                path = dialog.SelectedPath;
+            }
+            GetImages(path, width, height);
             InitButtonPictures();
         }
 
-//        private void GetImages(Bitmap[] path, int width, int height)
-//        {
-////            _imgFilesStrings = Directory.GetFiles(path, "*.jpg");
-//            if (width * height / 2 > path.Length)
-//            {
-//                throw new Exception();      //заменить на нормальное исключение
-//            }
-//            int k = height * width / 2;
-//            for (int i = 0; i < k; i++)
-//            {
-//                _pictureList.Add(path[i]);
-//                _pictureList.Add(path[i]);
-//            }
-//        }
+        private void GetImages(String path, int width, int height)
+        {
+            _imgFilesStrings = Directory.GetFiles(path, "*.jpg");
+            if (width * height / 2 > _imgFilesStrings.Length)
+            {
+                throw new Exception();      //заменить на нормальное исключение
+            }
+            int k = height * width / 2;
+            for (int i = 0; i < k; i++)
+            {
+                _pictureList.Add(_imgFilesStrings[i]);
+                _pictureList.Add(_imgFilesStrings[i]);
+            }
+        }
 
         private void imgBtn_Click(object sender, RoutedEventArgs e)
         {
             CardButton btn = (CardButton) sender;
             int i = 0;
-            if (_clickCounter == 0)
-            {
-                _timer.Start();
-            }
-            _clickCounter++;
             while (i < _tmpImages.Length && _tmpImages[i] != null)
             {
                 i++;
@@ -92,29 +87,9 @@ namespace Remember
 //                    _tmpImages[j].IsEnabled = false;
                     _tmpImages[j] = null;
                 }
-                _notOpenedCount--;
-                if (_notOpenedCount == 0)
-                {
-                    OnWinningDialog();
-                    _timer.Stop();
-                }
             }
 
         }
-
-        private void OnWinningDialog()
-        {
-            
-            MessageBox.Show("Time: " + _timerCount + "\n" + "Clicks: " + _clickCounter, "Points");
-            this.Close();
-        }
-
-//        private ImageBrush CreateBrushFromBitmap(Bitmap bmp)
-//        {
-//            return
-//                new ImageBrush(Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty,
-//                    BitmapSizeOptions.FromEmptyOptions()));
-//        }
 
         private void InitButtonPictures()
         {
@@ -122,38 +97,28 @@ namespace Remember
             {
                 for (int j = 0; j < _img.GetLength(1); j++)
                 {
-                    BitmapImage rnd = GenRndImage();
-                    
-                    _img[i, j].InternalContent = new Image
+                    var rnd = GenRndImage();
+                    _img[i,j].InternalContent = new Image()
                     {
-                        Source = rnd
+                        Source = new BitmapImage(new Uri(rnd))
                     };
                 }
             }
         }
 
-        public BitmapImage GenRndImage()
+        public String GenRndImage()
         {
             Random random = new Random();
             int i = random.Next(_pictureList.Count);
-            BitmapImage s = _pictureList[i];
+            String s = _pictureList[i];
             _pictureList.RemoveAt(i);
             return s;
 
         }
 
-        public void _timer_Tick(object sender, EventArgs eventArgs)
-        {
-            _timerCount++;
-        }
-
         private void InitializeComponent(int width, int height)
         {
             InitializeComponent();
-            _notOpenedCount = width*height/2;
-            _timer = new Timer();
-            _timer.Interval = 1000;
-            _timer.Tick += _timer_Tick;
             UniformGrid.Columns = width;
             _img = new CardButton[width,height];
             for (int i = 0; i < width; i++)
@@ -167,10 +132,10 @@ namespace Remember
                         BorderThickness = new Thickness(5, 5, 5, 5),
                         Content = new TextBlock()
                         {
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            VerticalAlignment = VerticalAlignment.Stretch,
                             Background = CardButton.DefaultBackground
-                        },
-                        HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                        VerticalContentAlignment = VerticalAlignment.Stretch
+                        }
                     };
                     _img[i,j].Click += imgBtn_Click;
                     UniformGrid.Children.Add(_img[i, j]);
@@ -179,6 +144,5 @@ namespace Remember
                 }
             }
         }
-        
     }
 }

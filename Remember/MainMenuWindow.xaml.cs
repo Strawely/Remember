@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Resources;
 using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media.Imaging;
 
 namespace Remember
 {
@@ -24,39 +17,23 @@ namespace Remember
             RadioBtnSet1.IsChecked = true;
         }
 
-//        private String ChoosePictureSet()
-//        {
-//
-//        }
-
-        private List<BitmapImage> GetImages()
+        private String ChoosePictureSet()
         {
-            List<BitmapImage> imgList = new List<BitmapImage>();
-            ResourceSet resourceSet = PictureSet1.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true,
-                true);
-            foreach (DictionaryEntry entry in resourceSet)
+            if (RadioBtnSet1.IsChecked == true)
             {
-                String resourceKey = entry.Key.ToString();
-                object resource = entry.Value;
-                imgList.Add((BitmapImage)resource);
+                return "C:\\Users\\solom\\Source\\Repos\\Remember\\src\\pictureSet1";
             }
-            return imgList;
-//            if (RadioBtnSet1.IsChecked == true)
-//            {
-//                return "C:\\Users\\solom\\Source\\Repos\\Remember\\src\\pictureSet1";
-//
-//            }
-//            else
-//            {
-//                if (RadioBtnSet2.IsChecked == true)
-//                {
-//                    return "C:\\Users\\solom\\Source\\Repos\\Remember\\src\\pictureSet2";
-//                }
-//                else
-//                {
-//                    return null;
-//                }
-//            }
+            else
+            {
+                if (RadioBtnSet2.IsChecked == true)
+                {
+                    return "C:\\Users\\solom\\Source\\Repos\\Remember\\src\\pictureSet2";
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         private void OnBtnStartClick(object sender, RoutedEventArgs e)
@@ -65,12 +42,11 @@ namespace Remember
             {
                 _fieldWidth = Int32.Parse(TxtBoxWidth.Text);
                 _fieldHeight = Int32.Parse(TxtBoxHeight.Text);
-                
                 if (_fieldWidth * _fieldHeight % 2 != 0)
                 {
                     throw new OddFieldSizeException();
                 }
-                Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight, GetImages());
+                Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight, ChoosePictureSet());
                 gameWindow.Show();
                 gameWindow.Activate();
                 this.Close();
@@ -92,11 +68,6 @@ namespace Remember
             {
                 Console.Write(exception.StackTrace);
             }
-        }
-
-        private void BtnStart_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
         }
     }
 }
