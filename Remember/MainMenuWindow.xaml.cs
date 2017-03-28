@@ -21,13 +21,13 @@ namespace Remember
         {
             if (RadioBtnSet1.IsChecked == true)
             {
-                return "C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet1";
+                return "C:\\Users\\solom\\Source\\Repos\\Remember\\src\\pictureSet1";
             }
             else
             {
                 if (RadioBtnSet2.IsChecked == true)
                 {
-                    return "C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet2";
+                    return "C:\\Users\\solom\\Source\\Repos\\Remember\\src\\pictureSet2";
                 }
                 else
                 {
