@@ -10,7 +10,7 @@ namespace Remember
         private bool _shown = false;
         private Image _internalContent;
         private String _contentToString;
-        private static Brush _defaultBackground = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\solom\\Source\\Repos\\Remember\\src\\backgr.png")));
+        private static Brush _defaultBackground = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\backgr.png")));
 
         public bool Shown
         {
@@ -23,7 +23,7 @@ namespace Remember
                 if (_shown)
                 {
                     brush.ImageSource = _internalContent.Source;
-                    Content = new TextBox()
+                    Content = new TextBlock()
                     {
                         Background = brush
                     };
@@ -31,7 +31,7 @@ namespace Remember
                 else
                 {
                     
-                    Content = new TextBox()
+                    Content = new TextBlock()
                     {
                         Background = _defaultBackground
                     };

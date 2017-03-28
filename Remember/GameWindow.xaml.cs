@@ -125,15 +125,12 @@ namespace Remember
             {
                 for (int j = 0; j < height; j++)
                 {
-                    _img[i, j] = new CardButton
+                    _img[i, j] = new CardButton()
                     {
-                        HorizontalAlignment = HorizontalAlignment.Stretch,
-                        VerticalAlignment = VerticalAlignment.Stretch,
-                        BorderThickness = new Thickness(5, 5, 5, 5),
+                        HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                        VerticalContentAlignment = VerticalAlignment.Stretch,
                         Content = new TextBlock()
                         {
-                            HorizontalAlignment = HorizontalAlignment.Stretch,
-                            VerticalAlignment = VerticalAlignment.Stretch,
                             Background = CardButton.DefaultBackground
                         }
                     };
