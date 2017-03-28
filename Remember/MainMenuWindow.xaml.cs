@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 
 namespace Remember
@@ -15,6 +16,8 @@ namespace Remember
         {
             InitializeComponent();
             RadioBtnSet1.IsChecked = true;
+
+//            System.Windows.Forms.MessageBox.Show(Directory.GetCurrentDirectory());
         }
 
         private String ChoosePictureSet()
@@ -67,6 +70,7 @@ namespace Remember
             catch (Exception exception)
             {
                 Console.Write(exception.StackTrace);
+                MessageBox.Show("ERRORchik");
             }
         }
     }

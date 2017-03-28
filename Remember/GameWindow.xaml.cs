@@ -41,6 +41,10 @@ namespace Remember
             }
             else
             {
+                /* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+                 * Добавить информационное сообщение/\/\
+                 * для пользователя                 /\/\
+                   /\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\*/
                 FolderBrowserDialog dialog = new FolderBrowserDialog();
                 dialog.ShowDialog();
                 path = dialog.SelectedPath;
@@ -56,6 +60,7 @@ namespace Remember
 
         private void GetImages(String path, int width, int height)
         {
+
             _imgFilesStrings = Directory.GetFiles(path, "*.jpg");
             if (width * height / 2 > _imgFilesStrings.Length)
             {
