@@ -14,17 +14,18 @@ namespace Remember
         private int _currentClicks;
         private int _leftCards;
 
-        private List<String> _imgList;
-//        private CardButton[,] _buttons;
+        private String[,] _imgFiles;
+
+        private bool[,] _isShown;
 //        private List<int> _topScoreTime;
 //        private List<int> _topScoreClicks;
 
-        public GameCondition(int currentTime, int currentClicks, int leftCards, List<string> imgList /*, List<int> topScoreTime,
-            List<int> topScoreClicks*/)
+        public GameCondition(int currentTime, int currentClicks, int leftCards, String[,] imgFiles, bool[,] isShown)
         {
             _currentClicks = currentClicks;
             _leftCards = leftCards;
-            _imgList = imgList;
+            _imgFiles = imgFiles;
+            _isShown = isShown;
 //            _topScoreTime = topScoreTime;
 //            _topScoreClicks = topScoreClicks;
             _currentTime = currentTime;
@@ -47,11 +48,18 @@ namespace Remember
             get { return _leftCards; }
             set { _leftCards = value; }
         }
+        
 
-        public List<string> ImgList
+        public String[,] ImgFiles
         {
-            get { return _imgList; }
-            set { _imgList = value; }
+            get { return _imgFiles; }
+            set { _imgFiles = value; }
+        }
+
+        public bool[,] IsShown
+        {
+            get { return _isShown; }
+            set { _isShown = value; }
         }
 
 //        public List<int> TopScoreTime
