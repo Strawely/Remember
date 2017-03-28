@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 
 namespace Remember
@@ -15,21 +16,27 @@ namespace Remember
         {
             InitializeComponent();
             RadioBtnSet1.IsChecked = true;
+        }
 
-//            System.Windows.Forms.MessageBox.Show(Directory.GetCurrentDirectory());
+        public static String GetSourcesPath()
+        {
+            String currentDirectory = Directory.GetCurrentDirectory();
+            String s = "Remember\\bin\\Debug";
+            int n = s.Length;
+            return currentDirectory.Substring(0, currentDirectory.Length - n);
         }
 
         private String ChoosePictureSet()
         {
             if (RadioBtnSet1.IsChecked == true)
             {
-                return "C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet1";
+                return GetSourcesPath() + "src\\pictureSet1";
             }
             else
             {
                 if (RadioBtnSet2.IsChecked == true)
                 {
-                    return "C:\\Users\\solom\\Documents\\visual studio 2017\\Projects\\Remember\\src\\pictureSet2";
+                    return GetSourcesPath() + "src\\pictureSet2";
                 }
                 else
                 {

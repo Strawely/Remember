@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Remember
 {
@@ -64,16 +53,21 @@ namespace Remember
 
         private void Deserialization()
         {
-            FileStream fileStream = File.OpenRead("data.dat");
-            BinaryFormatter bf = new BinaryFormatter();
-            GameCondition condition = (GameCondition) bf.Deserialize(fileStream);
-            _highScoreTime = condition.HighScoreTime;
-            _highScoreClicks = condition.HighScoreClicks;
+            if (File.Exists("data.dat"))
+            {
+                FileStream fileStream = File.OpenRead("data.dat");
+                BinaryFormatter bf = new BinaryFormatter();
+                GameCondition condition = (GameCondition) bf.Deserialize(fileStream);
+                _highScoreTime = condition.HighScoreTime;
+                _highScoreClicks = condition.HighScoreClicks;
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            GameCondition condition = new GameCondition(_highScoreTime, _highScoreClicks);
+            GameCondition condition = new GameCondition();
+            condition.HighScoreTime = _highScoreTime;
+            condition.HighScoreClicks = _highScoreClicks;
             FileStream fileStream = File.Create("data.dat");
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(fileStream, condition);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
@@ -18,17 +19,17 @@ namespace Remember
     public partial class GameWindow
     {
         private const int TimerInterval = 1;
-        private CardButton[,] _img;                                                     //инициализируется десериализацией
+        private CardButton[,] _img;
         private CardButton[] _tmpImages = new CardButton[2];
 
         private int _leftCardsCount;
         private int _timeCount;
         private int _clicksCount;
 
-        private Timer _timer = new Timer();                                            //стартовать таймер, если ещё не запущен
+        private Timer _timer = new Timer();                                          
 
-        private List<String> _pictureList = new List<string>();                         // что-нибудь сделать с дублированием списка массивом
-        private String[] _imgFilesStrings;
+        private List<String> _pictureList = new List<string>();
+        private List<String> _imgFilesStrings;
 
         public GameWindow(int width, int height, String pictureSetPath)
         {
@@ -41,7 +42,7 @@ namespace Remember
             }
             else
             {
-                path = GetCustomImagesPath();                                          //добавить информационное сообщение для пользователя                                           
+                path = GetCustomImagesPath();                                                                                    
             }
             InitializeComponent(width, height, path);
             InitizlizeTimer();
@@ -68,17 +69,30 @@ namespace Remember
 
         private void GetImages(String path, int width, int height)
         {
-            _imgFilesStrings = Directory.GetFiles(path, "*.jpg");
-            if (width * height / 2 > _imgFilesStrings.Length)
+            _imgFilesStrings = new List<string>();
+            var files =
+                Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
+                    .Where(s => s.EndsWith(".gif") || s.EndsWith(".jpg") || s.EndsWith(".png"));
+            int k = height * width / 2;
+            int i = 0;
+            foreach (var abc in files)
+            {
+                if (i < k)
+                {
+                    _pictureList.Add(abc);
+                    _pictureList.Add(abc);
+                    i++;
+                }
+            }
+            if (width * height > _pictureList.Count)
             {
                 throw new Exception();      //заменить на нормальное исключение
             }
-            int k = height * width / 2;
-            for (int i = 0; i < k; i++)
-            {
-                _pictureList.Add(_imgFilesStrings[i]);
-                _pictureList.Add(_imgFilesStrings[i]);
-            }
+//            for (int i = 0; i < k; i++)
+//            {
+//                _pictureList.Add(_imgFilesStrings[i]);
+//                _pictureList.Add(_imgFilesStrings[i]);
+//            }
         }
 
         private void imgBtn_Click(object sender, RoutedEventArgs e)
