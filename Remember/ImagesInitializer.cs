@@ -15,9 +15,30 @@ namespace Remember
     {
         private CardButton[,] _img;
 
+        private int _widht;
+        private int _height;
+
         private List<String> _pictureList = new List<string>();
 
-        public ImagesInitializer(int width, int height, String pictureSetPath)
+        private static ImagesInitializer _instance;
+
+        private ImagesInitializer()
+        {
+       
+        }
+
+        public static ImagesInitializer Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new ImagesInitializer();
+                }
+                return _instance;
+            }
+        }
+        public void Initializer(String pictureSetPath)
         {
             String path;
             if (pictureSetPath != null)
@@ -28,13 +49,25 @@ namespace Remember
             {
                 path = GetCustomImagesPath();
             }
-            InitializeComponent(width, height, path);
+            InitializeComponent(path);
         }
 
         public CardButton[,] Img
         {
             get { return _img; }
             set { _img = value; }
+        }
+
+        public int Widht
+        {
+            get { return _widht; }
+            set { _widht = value; }
+        }
+
+        public int Height
+        {
+            get { return _height; }
+            set { _height = value; }
         }
 
         private string GetCustomImagesPath()
@@ -44,12 +77,12 @@ namespace Remember
             return dialog.SelectedPath;
         }
 
-        private void GetImages(String path, int width, int height)
+        private void GetImages(String path)
         {
             var files =
                 Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
                     .Where(s => s.EndsWith(".gif") || s.EndsWith(".jpg") || s.EndsWith(".png"));
-            int k = height * width / 2;
+            int k = _height * _widht / 2;
             int i = 0;
             foreach (var abc in files)
             {
@@ -60,19 +93,19 @@ namespace Remember
                     i++;
                 }
             }
-            if (width * height > _pictureList.Count)
+            if (_widht * _height > _pictureList.Count)
             {
                 throw new NotEnoughPicturesException();
             }
         }
 
-        private void InitializeComponent(int width, int height, String path)
+        private void InitializeComponent(String path)
         {
-            GetImages(path, width, height);
-            _img = new CardButton[width, height];
-            for (int i = 0; i < width; i++)
+            GetImages(path);
+            _img = new CardButton[_widht, _height];
+            for (int i = 0; i < _widht; i++)
             {
-                for (int j = 0; j < height; j++)
+                for (int j = 0; j < _widht; j++)
                 {
                     _img[i, j] = new CardButton()
                     {
