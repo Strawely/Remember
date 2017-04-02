@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -10,7 +11,7 @@ namespace Remember
     [Serializable]
     public class CardButton:Button, ISerializable
     {
-        private bool _shown = false;
+        private bool _shown;
         private Image _internalContent;
         private String _contentToString;
         private static Brush _defaultBackground = new ImageBrush(new BitmapImage(new Uri(MainWindow.GetSourcesPath() + "src\\backgr.png")));
@@ -20,7 +21,6 @@ namespace Remember
             get { return _shown; }
             set
             {
-                BrushConverter brushConverter = new BrushConverter();
                 ImageBrush brush = new ImageBrush();
                 _shown = value;
                 if (_shown)
@@ -42,11 +42,9 @@ namespace Remember
             }
         }
 
-
-
         public bool CompareContent(CardButton cardButton)
         {
-            return this._contentToString.Equals(cardButton._contentToString);
+            return _contentToString.Equals(cardButton._contentToString);
         }
 
         public Image InternalContent
@@ -66,12 +64,18 @@ namespace Remember
 
         public CardButton()
         {
-            
+            VerticalContentAlignment = VerticalAlignment.Stretch;
+            HorizontalContentAlignment = HorizontalAlignment.Stretch;
+            BorderThickness = new Thickness(5, 5, 5, 5);
+            Content = new TextBlock
+            {
+                Background = DefaultBackground
+            };
         }
 
         public CardButton(SerializationInfo info, StreamingContext context)
         {
-            this.Shown = info.GetBoolean("Shown");
+            Shown = info.GetBoolean("Shown");
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)

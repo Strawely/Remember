@@ -105,7 +105,7 @@ namespace Remember
         private void InitImgMatrix(String path)
         {
             var imageInitializer = ImagesInitializer.Instance;
-            imageInitializer.Widht = _width;
+            imageInitializer.Width = _width;
             imageInitializer.Height = _height;
             imageInitializer.Initializer(path);
             _img = imageInitializer.Img;

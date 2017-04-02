@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-using HorizontalAlignment = System.Windows.HorizontalAlignment;
 
 namespace Remember
 {
@@ -15,10 +13,10 @@ namespace Remember
     {
         private CardButton[,] _img;
 
-        private int _widht;
+        private int _width;
         private int _height;
 
-        private List<String> _pictureList = new List<string>();
+        private readonly List<String> _pictureList = new List<string>();
 
         private static ImagesInitializer _instance;
 
@@ -38,7 +36,7 @@ namespace Remember
                 return _instance;
             }
         }
-        public void Initializer(String pictureSetPath)
+        public void Initialize(String pictureSetPath)
         {
             String path;
             if (pictureSetPath != null)
@@ -49,7 +47,7 @@ namespace Remember
             {
                 path = GetCustomImagesPath();
             }
-            InitializeComponent(path);
+            InitializeImgSources(path);
         }
 
         public CardButton[,] Img
@@ -58,10 +56,10 @@ namespace Remember
             set { _img = value; }
         }
 
-        public int Widht
+        public int Width
         {
-            get { return _widht; }
-            set { _widht = value; }
+            get { return _width; }
+            set { _width = value; }
         }
 
         public int Height
@@ -82,7 +80,7 @@ namespace Remember
             var files =
                 Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
                     .Where(s => s.EndsWith(".gif") || s.EndsWith(".jpg") || s.EndsWith(".png"));
-            int k = _height * _widht / 2;
+            int k = _height * _width / 2;
             int i = 0;
             foreach (var abc in files)
             {
@@ -93,30 +91,21 @@ namespace Remember
                     i++;
                 }
             }
-            if (_widht * _height > _pictureList.Count)
+            if (_width * _height > _pictureList.Count)
             {
                 throw new NotEnoughPicturesException();
             }
         }
 
-        private void InitializeComponent(String path)
+        private void InitializeImgSources(String path)
         {
             GetImages(path);
-            _img = new CardButton[_widht, _height];
-            for (int i = 0; i < _widht; i++)
+            _img = new CardButton[_width, _height];
+            for (int i = 0; i < _width; i++)
             {
-                for (int j = 0; j < _widht; j++)
+                for (int j = 0; j < _height; j++)
                 {
-                    _img[i, j] = new CardButton()
-                    {
-                        VerticalContentAlignment = VerticalAlignment.Stretch,
-                        HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                        BorderThickness = new Thickness(5, 5, 5, 5),
-                        Content = new TextBlock()
-                        {
-                            Background = CardButton.DefaultBackground
-                        }
-                    };
+                    _img[i, j] = new CardButton();
                     var rnd = GenRndImage();
                     _img[i, j].InternalContent = new Image()
                     {

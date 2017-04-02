@@ -32,7 +32,7 @@ namespace Remember
         }
 
         /// <summary>
-        /// Вз ависимости от положения переключателя выбирает набор картинок
+        /// Взависимости от положения переключателя выбирает набор картинок
         /// </summary>
         /// <returns>Path to directory with defined picture set</returns>
         private String ChoosePictureSet()
