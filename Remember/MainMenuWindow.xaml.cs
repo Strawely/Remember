@@ -7,10 +7,10 @@ namespace Remember
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private int _fieldWidth;
-        private int _fieldHeight;
+//        private int _fieldWidth;
+//        private int _fieldHeight;
 
         public MainWindow()
         {
@@ -18,6 +18,11 @@ namespace Remember
             RadioBtnSet1.IsChecked = true;
         }
 
+
+        /// <summary>
+        /// Получает строку пути к файлам картинок хранящимся в папке Resources
+        /// </summary>
+        /// <returns></returns>
         public static String GetSourcesPath()
         {
             String currentDirectory = Directory.GetCurrentDirectory();
@@ -26,6 +31,10 @@ namespace Remember
             return currentDirectory.Substring(0, currentDirectory.Length - n);
         }
 
+        /// <summary>
+        /// Вз ависимости от положения переключателя выбирает набор картинок
+        /// </summary>
+        /// <returns>Path to directory with defined picture set</returns>
         private String ChoosePictureSet()
         {
             if (RadioBtnSet1.IsChecked == true)
@@ -49,13 +58,13 @@ namespace Remember
         {
             try
             {
-                _fieldWidth = Int32.Parse(TxtBoxWidth.Text);
-                _fieldHeight = Int32.Parse(TxtBoxHeight.Text);
-                if (_fieldWidth*_fieldHeight%2 != 0)
+                var fieldWidth = Int32.Parse(TxtBoxWidth.Text);
+                var fieldHeight = Int32.Parse(TxtBoxHeight.Text);
+                if (fieldWidth*fieldHeight%2 != 0)
                 {
                     throw new OddFieldSizeException();
                 }
-                Window gameWindow = new GameWindow(_fieldWidth, _fieldHeight, ChoosePictureSet());
+                Window gameWindow = new GameWindow(fieldWidth, fieldHeight, ChoosePictureSet());
                 gameWindow.Show();
                 gameWindow.Activate();
                 Close();
