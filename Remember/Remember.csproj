@@ -90,6 +90,11 @@
     </Compile>
     <Compile Include="ImagesInitializer.cs" />
     <Compile Include="NotEnoughPicturesException.cs" />
+    <Compile Include="PictureSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PictureSet1.resx</DependentUpon>
+    </Compile>
     <Compile Include="Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
@@ -137,6 +142,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="PictureSet1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PictureSet1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -150,81 +159,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\0gCS4yVRRE0.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2fytGkNdwmE.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\omNq46VJ8GQ.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\rUhnLnBZURc.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\YZZhk5ZAzGE.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09226.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09227.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09228.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09229.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09247.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09263.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09432.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09433.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09506.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\flJ9ZesgcVk.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Ixw650ai3Tk.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\LeFfxBY0wME.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\nUSrQ6mYU3I.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\R3YUaF68GEc.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\rzio-EoS9GM.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\U-1w0W8wTJ4.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\-yLH9pDsYXo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\cVObKoCHoSQ.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DL-cd9om9Uo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DSC09224.JPG" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 и x64%29</ProductName>
@@ -235,6 +169,27 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\_3B70WZ817.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\_3B70WZB7M.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\_3B70WZDQF.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\_3B70WZIS8.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\_3B70WZKMO.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\_3B70WZSAU.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\_3B70X19O0.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

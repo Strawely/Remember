@@ -109,6 +109,7 @@ namespace Remember
                     var rnd = GenRndImage();
                     _img[i, j].InternalContent = new Image()
                     {
+                        
                         Source = new BitmapImage(new Uri(rnd))
                     };
                 }

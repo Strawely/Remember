@@ -107,7 +107,7 @@ namespace Remember
             var imageInitializer = ImagesInitializer.Instance;
             imageInitializer.Width = _width;
             imageInitializer.Height = _height;
-            imageInitializer.Initializer(path);
+            imageInitializer.Initialize(path);
             _img = imageInitializer.Img;
         }
 
