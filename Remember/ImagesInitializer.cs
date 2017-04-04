@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows.Controls;
+using System.Resources;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using Image = System.Windows.Controls.Image;
 
 namespace Remember
 {
@@ -16,7 +21,7 @@ namespace Remember
         private int _width;
         private int _height;
 
-        private readonly List<String> _pictureList = new List<string>();
+        private readonly List<BitmapImage> _pictureList = new List<BitmapImage>();
 
         private static ImagesInitializer _instance;
 
@@ -75,19 +80,37 @@ namespace Remember
             return dialog.SelectedPath;
         }
 
+        private BitmapImage BmpToBitmapImage(Bitmap bmp)
+        {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bmp.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                return bitmapImage;
+            }
+        }
+
         private void GetImages(String path)
         {
-            var files =
-                Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
-                    .Where(s => s.EndsWith(".gif") || s.EndsWith(".jpg") || s.EndsWith(".png"));
+//            var files =
+//                Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
+//                    .Where(s => s.EndsWith(".gif") || s.EndsWith(".jpg") || s.EndsWith(".png"));
             int k = _height * _width / 2;
             int i = 0;
-            foreach (var abc in files)
+            ResourceSet resourceSet = PictureSet1.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true,
+                true);
+            foreach (DictionaryEntry entry in resourceSet)
             {
                 if (i < k)
                 {
-                    _pictureList.Add(abc);
-                    _pictureList.Add(abc);
+                    BitmapImage bmpTmp = BmpToBitmapImage((Bitmap) entry.Value);
+                    _pictureList.Add(bmpTmp);
+                    _pictureList.Add(bmpTmp);
                     i++;
                 }
             }
@@ -107,22 +130,21 @@ namespace Remember
                 {
                     _img[i, j] = new CardButton();
                     var rnd = GenRndImage();
-                    _img[i, j].InternalContent = new Image()
-                    {
-                        
-                        Source = new BitmapImage(new Uri(rnd))
-                    };
+                    _img[i, j].InternalContent = rnd;
                 }
             }
         }
 
-        private String GenRndImage()
+        private Image GenRndImage()
         {
             Random random = new Random();
             int i = random.Next(_pictureList.Count);
-            String s = _pictureList[i];
+            Image img = new Image
+            {
+                Source = _pictureList[i]
+            };
             _pictureList.RemoveAt(i);
-            return s;
+            return img;
 
         }
     }

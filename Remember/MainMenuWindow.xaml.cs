@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Remember
 {
@@ -39,7 +42,10 @@ namespace Remember
         {
             if (RadioBtnSet1.IsChecked == true)
             {
-                return GetSourcesPath() + "src\\pictureSet1";
+//                return GetSourcesPath() + "src\\pictureSet1";
+//                Image b = new Image();
+//                b.Source = new BitmapImage(new Uri(@"pack://application:,,,/PictureSet1/", UriKind.Relative));
+                return @"pack://application:,,,/PictureSet1";
             }
             else
             {

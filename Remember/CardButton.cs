@@ -13,7 +13,7 @@ namespace Remember
     {
         private bool _shown;
         private Image _internalContent;
-        private String _contentToString;
+//        private String _contentToString;
         private static Brush _defaultBackground = new ImageBrush(new BitmapImage(new Uri(MainWindow.GetSourcesPath() + "src\\backgr.png")));
 
         public bool Shown
@@ -42,9 +42,10 @@ namespace Remember
             }
         }
 
-        public bool CompareContent(CardButton cardButton)
+        public bool IsEqual(CardButton cardButton)
         {
-            return _contentToString.Equals(cardButton._contentToString);
+//            return _contentToString.Equals(cardButton._contentToString);
+            return true;
         }
 
         public Image InternalContent
@@ -53,7 +54,7 @@ namespace Remember
             set
             {
                 _internalContent = value;
-                _contentToString = ((BitmapImage) _internalContent.Source).UriSource.ToString();
+//                _contentToString = ((BitmapImage) _internalContent.Source).UriSource.ToString();
             }
         }
 
