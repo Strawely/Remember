@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using MessageBox = System.Windows.Forms.MessageBox;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Remember
 {
@@ -16,59 +12,47 @@ namespace Remember
     public partial class GameWindow
     {
         private CardButton[,] _img;
-        private CardButton[] _tmpImages = new CardButton[2];
+        private readonly CardButton[] _tmpImages = new CardButton[2];
 
-        private List<String> _pictureList = new List<string>();
-        private String[] _imgFilesStrings;
+        private const int TimerInterval = 1;
+        private readonly int _width;
+        private readonly int _height;
+        private int _leftCardsCount;
+        private int _timeCount;
+        private int _clicksCount;
 
-        private int _timerCount;
-        private int _clickCounter;
-        private int _notOpenedCount;
-
-        private Timer _timer;
-
+        private readonly Timer _timer = new Timer();                                          
+        
         public GameWindow(int width, int height, String pictureSetPath)
         {
-            InitializeComponent(width, height);
-            String path;
-            if (pictureSetPath != null)
-            {
-                path = pictureSetPath;
-            }
-            else
-            {
-                FolderBrowserDialog dialog = new FolderBrowserDialog();
-                dialog.ShowDialog();
-                path = dialog.SelectedPath;
-            }
-            GetImages(path, width, height);
-            InitButtonPictures();
+            _width = width;
+            _height = height;
+            _leftCardsCount = width * height / 2;
+            String path = pictureSetPath;
+            InitializeComponent(path);
+            InitizlizeTimer();
         }
 
-        private void GetImages(String path, int width, int height)
+        private void InitizlizeTimer()
         {
-            _imgFilesStrings = Directory.GetFiles(path, "*.jpg");
-            if (width * height / 2 > _imgFilesStrings.Length)
-            {
-                throw new Exception();      //заменить на нормальное исключение
-            }
-            int k = height * width / 2;
-            for (int i = 0; i < k; i++)
-            {
-                _pictureList.Add(_imgFilesStrings[i]);
-                _pictureList.Add(_imgFilesStrings[i]);
-            }
+            _timer.Interval = TimerInterval;
+            _timer.Tick += _timer_Tick;
+            _timer.Start();
+        }
+        
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            _timeCount++;
         }
 
+        /************************
+         * Здесь надо упростить *
+         ************************/
         private void imgBtn_Click(object sender, RoutedEventArgs e)
         {
+            _clicksCount++;
             CardButton btn = (CardButton) sender;
             int i = 0;
-            if (_clickCounter == 0)
-            {
-                _timer.Start();
-            }
-            _clickCounter++;
             while (i < _tmpImages.Length && _tmpImages[i] != null)
             {
                 i++;
@@ -90,94 +74,62 @@ namespace Remember
                     btn.Shown = true;
                     break;
             }
-            if (_tmpImages[0] != null && _tmpImages[1] != null && _tmpImages[0].CompareContent(_tmpImages[1]))
+            if (_tmpImages[0] != null && _tmpImages[1] != null && _tmpImages[0].IsEqual(_tmpImages[1]))
             {
-
+                _leftCardsCount--;
                 for (int j = 0; j < 2; j++)
                 {
                     _tmpImages[j].Click -= imgBtn_Click;
-//                    _tmpImages[j].IsEnabled = false;
                     _tmpImages[j] = null;
                 }
-                _notOpenedCount--;
-                if (_notOpenedCount == 0)
-                {
-                    OnWinningDialog();
-                    _timer.Stop();
-                }
             }
-
-        }
-
-        private void OnWinningDialog()
-        {
-            
-            MessageBox.Show("Time: " + _timerCount + "\n" + "Clicks: " + _clickCounter, "Points");
-            this.Close();
-        }
-
-        private void InitButtonPictures()
-        {
-            for (int i = 0; i < _img.GetLength(0); i++)
+            if (_leftCardsCount == 0)
             {
-                for (int j = 0; j < _img.GetLength(1); j++)
-                {
-                    var rnd = GenRndImage();
-                    _img[i,j].InternalContent = new Image()
-                    {
-                        Source = new BitmapImage(new Uri(rnd))
-                    };
-                }
+                _timer.Stop();
+                OnWinning();
             }
         }
 
-        public String GenRndImage()
+        private void ShowHighScore()
         {
-            Random random = new Random();
-            int i = random.Next(_pictureList.Count);
-            String s = _pictureList[i];
-            _pictureList.RemoveAt(i);
-            return s;
-
+            Window highScoreWindow = new HighScore(_timeCount, _clicksCount);
+            highScoreWindow.Show();
+            highScoreWindow.Activate();
         }
 
-        public void _timer_Tick(object sender, EventArgs eventArgs)
+        private void OnWinning()
         {
-            _timerCount++;
+            MessageBox.Show("Clicks: " + _clicksCount + "\nTime: " + _timeCount + " ms", Properties.Resources.GameWindow_OnWinning_Score);
+            ShowHighScore();
         }
 
-        private void InitializeComponent(int width, int height)
+        private void InitImgMatrix(String path)
+        {
+            var imageInitializer = ImagesInitializer.Instance;
+            imageInitializer.Width = _width;
+            imageInitializer.Height = _height;
+            imageInitializer.Initialize(path);
+            _img = imageInitializer.Img;
+        }
+
+        private void InitializeComponent(String path)
         {
             InitializeComponent();
-            _notOpenedCount = width*height/2;
-            _timer = new Timer();
-            _timer.Interval = 1000;
-            _timer.Tick += _timer_Tick;
-            UniformGrid.Columns = width;
-            _img = new CardButton[width,height];
-            for (int i = 0; i < width; i++)
+            UniformGrid.Columns = _width;
+            InitImgMatrix(path);
+            for (int i = 0; i < _width; i++)
             {
-                for (int j = 0; j < height; j++)
+                for (int j = 0; j < _height; j++)
                 {
-                    _img[i, j] = new CardButton
-                    {
-                        HorizontalAlignment = HorizontalAlignment.Stretch,
-                        VerticalAlignment = VerticalAlignment.Stretch,
-                        BorderThickness = new Thickness(5, 5, 5, 5),
-                        Content = new TextBlock()
-                        {
-                            Background = CardButton.DefaultBackground
-                        },
-                        HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                        VerticalContentAlignment = VerticalAlignment.Stretch
-                    };
-                    _img[i,j].Click += imgBtn_Click;
+                    _img[i, j].Click += imgBtn_Click;
                     UniformGrid.Children.Add(_img[i, j]);
-                    
-
                 }
             }
         }
-        
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 }

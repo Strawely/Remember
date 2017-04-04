@@ -11,16 +11,12 @@
             x:Name="BtnStart" 
             Content="Start Game" 
             HorizontalAlignment="Center" 
-            VerticalAlignment="Center" 
-            Width="75" 
-            Margin="0,39,0,240" 
-            Click="OnBtnStartClick" IsDefault="True" MouseMove="BtnStart_MouseMove" IsHitTestVisible="True">
-            <Button.Background>
-                <SolidColorBrush Color="#FFDDDDDD"/>
-            </Button.Background>
-        </Button>
+            VerticalAlignment="Top" 
+            Width="118" 
+            Margin="200,19,199,0" 
+            Click="OnBtnStartClick" IsHitTestVisible="True" BorderThickness="1" IsDefault="True"/>
 
-        <TextBox x:Name="TxtBoxWidth" Text="2" HorizontalAlignment="Center" TextWrapping="Wrap" Width="120" Margin="0,91,0,0" Height="23" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtBoxWidth" Text="3" HorizontalAlignment="Center" TextWrapping="Wrap" Width="120" Margin="0,91,0,0" Height="23" VerticalAlignment="Top"/>
         <TextBox x:Name="TxtBoxHeight" Text ="2" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,119,0,0"/>
         <Label x:Name="LblWidth" Content="Width:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="148,91,0,0"/>
         <Label x:Name="LblHeight" Content="Height:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="145,119,0,0"/>

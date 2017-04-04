@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Remember.Properties {
+namespace Remember {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Remember.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class PictureSet1 {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal PictureSet1() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Remember.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Remember.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Remember.PictureSet1", typeof(PictureSet1).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,72 @@ namespace Remember.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Score.
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static string GameWindow_OnWinning_Score {
+        internal static System.Drawing.Bitmap _3B70WZ817 {
             get {
-                return ResourceManager.GetString("GameWindow_OnWinning_Score", resourceCulture);
+                object obj = ResourceManager.GetObject("_3B70WZ817", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _3B70WZB7M {
+            get {
+                object obj = ResourceManager.GetObject("_3B70WZB7M", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _3B70WZDQF {
+            get {
+                object obj = ResourceManager.GetObject("_3B70WZDQF", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _3B70WZIS8 {
+            get {
+                object obj = ResourceManager.GetObject("_3B70WZIS8", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _3B70WZKMO {
+            get {
+                object obj = ResourceManager.GetObject("_3B70WZKMO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _3B70WZSAU {
+            get {
+                object obj = ResourceManager.GetObject("_3B70WZSAU", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _3B70X19O0 {
+            get {
+                object obj = ResourceManager.GetObject("_3B70X19O0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

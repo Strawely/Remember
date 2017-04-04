@@ -1,31 +1,31 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Button = System.Windows.Controls.Button;
 
 namespace Remember
 {
-    public class CardButton:Button
+    [Serializable]
+    public class CardButton:Button, ISerializable
     {
-        private bool _shown = false;
+        private bool _shown;
         private Image _internalContent;
-        private String _contentToString;
-        
-        private static Brush _defaultBackground = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\solom\\Source\\Repos\\Remember\\src\\backgr.png")));
+//        private String _contentToString;
+        private static Brush _defaultBackground = new ImageBrush(new BitmapImage(new Uri(MainWindow.GetSourcesPath() + "src\\backgr.png")));
 
         public bool Shown
         {
             get { return _shown; }
             set
             {
-                BrushConverter brushConverter = new BrushConverter();
                 ImageBrush brush = new ImageBrush();
                 _shown = value;
                 if (_shown)
                 {
                     brush.ImageSource = _internalContent.Source;
-                    
                     Content = new TextBlock()
                     {
                         Background = brush
@@ -34,7 +34,6 @@ namespace Remember
                 else
                 {
                     
-//                    Background = _defaultBackground;
                     Content = new TextBlock()
                     {
                         Background = _defaultBackground
@@ -43,11 +42,10 @@ namespace Remember
             }
         }
 
-
-
-        public bool CompareContent(CardButton cardButton)
+        public bool IsEqual(CardButton cardButton)
         {
-            return this._contentToString.Equals(cardButton._contentToString);
+//            return _contentToString.Equals(cardButton._contentToString);
+            return true;
         }
 
         public Image InternalContent
@@ -56,13 +54,34 @@ namespace Remember
             set
             {
                 _internalContent = value;
-                _contentToString = ((BitmapImage) _internalContent.Source).UriSource.ToString();
+//                _contentToString = ((BitmapImage) _internalContent.Source).UriSource.ToString();
             }
         }
 
         public static Brush DefaultBackground
         {
             get { return _defaultBackground; }
+        }
+
+        public CardButton()
+        {
+            VerticalContentAlignment = VerticalAlignment.Stretch;
+            HorizontalContentAlignment = HorizontalAlignment.Stretch;
+            BorderThickness = new Thickness(5, 5, 5, 5);
+            Content = new TextBlock
+            {
+                Background = DefaultBackground
+            };
+        }
+
+        public CardButton(SerializationInfo info, StreamingContext context)
+        {
+            Shown = info.GetBoolean("Shown");
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Shown", _shown);
         }
     }
 }
