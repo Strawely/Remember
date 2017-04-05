@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Resources;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -14,6 +15,8 @@ namespace Remember
         private CardButton[,] _img;
         private readonly CardButton[] _tmpImages = new CardButton[2];
 
+        private readonly ResourceSet _path;
+
         private const int TimerInterval = 1;
         private readonly int _width;
         private readonly int _height;
@@ -23,13 +26,13 @@ namespace Remember
 
         private readonly Timer _timer = new Timer();                                          
         
-        public GameWindow(int width, int height, String pictureSetPath)
+        public GameWindow(int width, int height, ResourceSet pictureSetPath)
         {
             _width = width;
             _height = height;
             _leftCardsCount = width * height / 2;
-            String path = pictureSetPath;
-            InitializeComponent(path);
+            _path = pictureSetPath;
+            InitializeImages();
             InitizlizeTimer();
         }
 
@@ -103,20 +106,20 @@ namespace Remember
             ShowHighScore();
         }
 
-        private void InitImgMatrix(String path)
+        private void InitImgMatrix()
         {
             var imageInitializer = ImagesInitializer.Instance;
             imageInitializer.Width = _width;
             imageInitializer.Height = _height;
-            imageInitializer.Initialize(path);
+            imageInitializer.Initialize(_path);
             _img = imageInitializer.Img;
         }
 
-        private void InitializeComponent(String path)
+        private void InitializeImages()
         {
             InitializeComponent();
             UniformGrid.Columns = _width;
-            InitImgMatrix(path);
+            InitImgMatrix();
             for (int i = 0; i < _width; i++)
             {
                 for (int j = 0; j < _height; j++)

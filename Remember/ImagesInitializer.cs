@@ -41,18 +41,17 @@ namespace Remember
                 return _instance;
             }
         }
-        public void Initialize(String pictureSetPath)
+        public void Initialize(ResourceSet pictureSetPath)
         {
-            String path;
             if (pictureSetPath != null)
             {
-                path = pictureSetPath;
+                GetImages(pictureSetPath);
             }
             else
             {
-                path = GetCustomImagesPath();
+                GetCustomImages();
             }
-            InitializeImgSources(path);
+            InitializeImgSources();
         }
 
         public CardButton[,] Img
@@ -73,11 +72,29 @@ namespace Remember
             set { _height = value; }
         }
 
-        private string GetCustomImagesPath()
+        private void GetCustomImages()
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.ShowDialog();
-            return dialog.SelectedPath;
+            var files =
+               Directory.GetFiles(dialog.SelectedPath, "*.*", SearchOption.AllDirectories)
+                   .Where(s => s.EndsWith(".gif") || s.EndsWith(".jpg") || s.EndsWith(".png"));
+            int k = _height * _width / 2;
+            int i = 0;
+            foreach (var entry in files)
+            {
+                if (i < k)
+                {
+                    BitmapImage bmpTmp = new BitmapImage(new Uri(entry));
+                    _pictureList.Add(bmpTmp);
+                    _pictureList.Add(bmpTmp);
+                    i++;
+                }
+            }
+            if (_width * _height > _pictureList.Count)
+            {
+                throw new NotEnoughPicturesException();
+            }
         }
 
         private BitmapImage BmpToBitmapImage(Bitmap bmp)
@@ -95,15 +112,13 @@ namespace Remember
             }
         }
 
-        private void GetImages(String path)
+        private void GetImages(ResourceSet path)
         {
-//            var files =
-//                Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
-//                    .Where(s => s.EndsWith(".gif") || s.EndsWith(".jpg") || s.EndsWith(".png"));
+           
             int k = _height * _width / 2;
             int i = 0;
-            ResourceSet resourceSet = PictureSet1.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true,
-                true);
+            ResourceSet resourceSet = path; /*PictureSet1.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true,
+                true);*/
             foreach (DictionaryEntry entry in resourceSet)
             {
                 if (i < k)
@@ -120,9 +135,8 @@ namespace Remember
             }
         }
 
-        private void InitializeImgSources(String path)
+        private void InitializeImgSources()
         {
-            GetImages(path);
             _img = new CardButton[_width, _height];
             for (int i = 0; i < _width; i++)
             {

@@ -15,8 +15,9 @@ namespace Remember
     {
         private bool _shown;
         private Image _internalContent;
-//        private String _contentToString;
-        private static Brush _defaultBackground = new ImageBrush(new BitmapImage(new Uri(MainWindow.GetSourcesPath() + "src\\backgr.png")));
+
+        private static Brush _defaultBackground =
+            new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Resources/backgr.png")));
 
         public bool Shown
         {
@@ -46,8 +47,7 @@ namespace Remember
 
         public bool IsEqual(CardButton cardButton)
         {
-//            return _contentToString.Equals(cardButton._contentToString);
-            BitmapImage image1 = (BitmapImage)this.InternalContent.Source;
+            BitmapImage image1 = (BitmapImage)InternalContent.Source;
             BitmapImage image2 = (BitmapImage)cardButton.InternalContent.Source;
             if (image1 == null || image2 == null)
             {
@@ -58,7 +58,7 @@ namespace Remember
 
         private byte[] ToBytes(BitmapImage image)
         {
-            byte[] data = new byte[] {};
+            byte[] data = {};
             if (image != null)
             {
                 var encoder = new BmpBitmapEncoder();

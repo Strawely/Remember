@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
+using System.Resources;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace Remember
 {
@@ -38,26 +37,17 @@ namespace Remember
         /// Взависимости от положения переключателя выбирает набор картинок
         /// </summary>
         /// <returns>Path to directory with defined picture set</returns>
-        private String ChoosePictureSet()
+        private ResourceSet ChoosePictureSet()
         {
             if (RadioBtnSet1.IsChecked == true)
             {
-//                return GetSourcesPath() + "src\\pictureSet1";
-//                Image b = new Image();
-//                b.Source = new BitmapImage(new Uri(@"pack://application:,,,/PictureSet1/", UriKind.Relative));
-                return @"pack://application:,,,/PictureSet1";
+                return PictureSet1.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
             }
-            else
+            if (RadioBtnSet2.IsChecked == true)
             {
-                if (RadioBtnSet2.IsChecked == true)
-                {
-                    return GetSourcesPath() + "src\\pictureSet2";
-                }
-                else
-                {
-                    return null;
-                }
+                return PictureSet2.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
             }
+            return null;
         }
 
         private void OnBtnStartClick(object sender, RoutedEventArgs e)

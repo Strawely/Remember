@@ -95,6 +95,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PictureSet1.resx</DependentUpon>
     </Compile>
+    <Compile Include="PictureSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PictureSet2.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
@@ -146,9 +156,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PictureSet1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="PictureSet2.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PictureSet2.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -190,6 +208,75 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\_3B70X19O0.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\backgr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dj.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fj.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\la.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ly.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tj.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\uy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ws.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cd.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
