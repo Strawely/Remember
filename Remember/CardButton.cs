@@ -79,7 +79,6 @@ namespace Remember
             set
             {
                 _internalContent = value;
-//                _contentToString = ((BitmapImage) _internalContent.Source).UriSource.ToString();
             }
         }
 

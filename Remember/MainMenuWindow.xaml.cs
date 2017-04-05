@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Resources;
 using System.Windows;
+using Remember.Properties;
 
 namespace Remember
 {
@@ -11,15 +12,12 @@ namespace Remember
     /// </summary>
     public partial class MainWindow
     {
-//        private int _fieldWidth;
-//        private int _fieldHeight;
-
         public MainWindow()
         {
             InitializeComponent();
             RadioBtnSet1.IsChecked = true;
         }
-
+        
 
         /// <summary>
         /// Получает строку пути к файлам картинок хранящимся в папке Resources

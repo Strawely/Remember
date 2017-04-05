@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows;
 
 namespace Remember
 {
     /// <summary>
     /// Логика взаимодействия для High_Score.xaml
     /// </summary>
-    public partial class HighScore : Window
+    public partial class HighScore
     {
         private List<int> _highScoreTime;
         private List<int> _highScoreClicks;
@@ -38,7 +37,7 @@ namespace Remember
         private void AddScoreToList(int time, int clicks)
         {
             int i = 0;
-            while (i < _highScoreTime.Count && _highScoreTime != null &&_highScoreTime[i] < time)
+            while (i < _highScoreTime.Count && _highScoreTime != null && _highScoreTime[i] < time)
             {
                 i++;
             }
@@ -65,9 +64,11 @@ namespace Remember
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            GameCondition condition = new GameCondition();
-            condition.HighScoreTime = _highScoreTime;
-            condition.HighScoreClicks = _highScoreClicks;
+            GameCondition condition = new GameCondition
+            {
+                HighScoreTime = _highScoreTime,
+                HighScoreClicks = _highScoreClicks
+            };
             FileStream fileStream = File.Create("data.dat");
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(fileStream, condition);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Resources;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using MessageBox = System.Windows.Forms.MessageBox;
 using Timer = System.Windows.Forms.Timer;
 
