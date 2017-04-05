@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,7 +47,30 @@ namespace Remember
         public bool IsEqual(CardButton cardButton)
         {
 //            return _contentToString.Equals(cardButton._contentToString);
-            return true;
+            BitmapImage image1 = (BitmapImage)this.InternalContent.Source;
+            BitmapImage image2 = (BitmapImage)cardButton.InternalContent.Source;
+            if (image1 == null || image2 == null)
+            {
+                return false;
+            }
+            return ToBytes(image1).SequenceEqual(ToBytes(image2));
+        }
+
+        private byte[] ToBytes(BitmapImage image)
+        {
+            byte[] data = new byte[] {};
+            if (image != null)
+            {
+                var encoder = new BmpBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(image));
+                using (MemoryStream memory = new MemoryStream())
+                {
+                    encoder.Save(memory);
+                    data = memory.ToArray();
+                }
+                return data;
+            }
+            return data;
         }
 
         public Image InternalContent

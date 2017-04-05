@@ -74,7 +74,7 @@ namespace Remember
                     btn.Shown = true;
                     break;
             }
-            if (_tmpImages[0] != null && _tmpImages[1] != null && _tmpImages[0].IsEqual(_tmpImages[1]))
+            if (_tmpImages[0]!= null && _tmpImages[1]!=null && _tmpImages[0].IsEqual(_tmpImages[1]))
             {
                 _leftCardsCount--;
                 for (int j = 0; j < 2; j++)
